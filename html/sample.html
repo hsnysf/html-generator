@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>Employee Management</title>
+		
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no">
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		
+	    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-startup-image" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon-precomposed" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+	
+	</head>
+	<body>
+	
+		<div class="container-fluid" ng-app="application" ng-controller="controller">
+		
+			<h4 class="pb-2 mt-4 mb-3 border-bottom">
+				Employee Management
+			</h4>
+			
+			<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+			</div>
+			
+			<div class="card">
+				<div class="card-header fw-bold">
+					Employee Search
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="cpr" class="form-label">Cpr</label>
+								<input id="cpr" ng-model="employeeSearch.cpr" type="tel" class="form-control is-valid cpr" placeholder="CPR" maxlength="9" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="name" class="form-label">Name</label>
+								<input id="name" ng-model="employeeSearch.name" type="text" class="form-control is-valid name" placeholder="Name" maxlength="100" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="age" class="form-label">Age</label>
+								<input id="age" ng-model="employeeSearch.age" type="tel" class="form-control is-valid age" placeholder="Age" maxlength="2" autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-dark" ng-click="searchEmployee()">Search</button>
+				</div>
+			</div>
+			
+			<div class="card mt-4">
+				<div class="card-header fw-bold">
+					Employee List
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Id
+								</th>
+								<th>
+									CPR
+								</th>
+								<th>
+									Name
+								</th>
+								<th>
+									Age
+								</th>
+								<th>
+									Active
+								</th>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#employeeModal" ng-click="toAddEmployee()">Add</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="employee in searchedEmployees.slice(from, to)">
+								<td>
+									{{$index + 1}}
+								</td>
+								<td>
+									{{employee.id}}
+								</td>
+								<td>
+									{{employee.cpr}}
+								</td>
+								<td>
+									{{employee.name}}
+								</td>
+								<td>
+									{{employee.age}}
+								</td>
+								<td>
+									{{employee.active ? 'Yes' : 'No'}}
+								</td>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#viewModal" ng-click="selectEmployee(employee)">View</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#employeeModal" ng-click="toUpdateEmployee(employee)">Edit</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="!employee.active" ng-click="selectEmployee(employee)">Activate</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="employee.active" ng-click="selectEmployee(employee)">Deactivate</button>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-3 text-start">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="first()">First</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="previous()">Previous</button>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold">
+								Rows :
+								<select ng-model="rows" class="form-control d-inline w-auto" ng-change="updateRows()">
+									<option ng-value="5">5</option>
+									<option ng-value="10">10</option>
+									<option ng-value="15">15</option>
+									<option ng-value="20">20</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Total : {{searchedEmployees.length}}
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Page {{pageNo}} of {{pageCount}}
+							</label>
+						</div>
+						<div class="col-3 text-end">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="next()">Next</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="last()">Last</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="employeeModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{employee.id == null ? 'Add' : 'Update'}} Employee</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+							</div>
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Employee Details
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="cpr" class="form-label">CPR</label>
+												<input id="cpr" ng-model="employee.cpr" type="tel" class="form-control is-valid cpr" placeholder="CPR" maxlength="9" autocomplete="off" required="required">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="name" class="form-label">Name</label>
+												<input id="name" ng-model="employee.name" type="text" class="form-control is-valid name" placeholder="Name" maxlength="100" autocomplete="off" required="required">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="age" class="form-label">Age</label>
+												<input id="age" ng-model="employee.age" type="tel" class="form-control is-valid age" placeholder="Age" maxlength="2" autocomplete="off" required="required">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" ng-if="employee.id == null" ng-click="addEmployee()">Add</button>
+							<button type="button" class="btn btn-dark" ng-if="employee.id != null" ng-click="updateEmployee()">Update</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="viewModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">View Employee</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<tbody>
+										<tr>
+											<th>
+												Id
+											</th>
+											<td>
+												{{employee.id}}
+											</td>
+											<th>
+												Name
+											</th>
+											<td>
+												{{employee.name}}
+											</td>
+										</tr>
+										<tr>
+											<th>
+												CPR
+											</th>
+											<td>
+												{{employee.cpr}}
+											</td>
+											<th>
+												Age
+											</th>
+											<td>
+												{{employee.age}}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="activateModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{employee.active ? 'Deactivate' : 'Activate'}} Employee</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<h4>Are you sure to {{employee.active ? 'deactivate' : 'activate'}} Employee</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="!employee.active" ng-click="updateEmployeeActive()">Activate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="employee.active" ng-click="updateEmployeeActive()">Deactivate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			var application = angular.module("application", []);
+		
+			application.controller("controller", 
+
+				function($scope, $timeout){
+					
+					$scope.rows = 5;
+					$scope.from = 0;
+					$scope.to = $scope.rows;
+					$scope.pageNo = 1;
+					$scope.pageCount = 0;
+					$scope.alert = {class:"d-none", message:null};
+					$scope.employeeSearch = new Object();
+					$scope.employee = new Object();
+					
+					if(localStorage.getItem("employees") != null){
+						$scope.employees = JSON.parse(localStorage.getItem("employees"));
+					}else{
+						$scope.employees = new Array();
+						localStorage.setItem("employees", JSON.stringify($scope.employees));
+					}
+					
+					$scope.searchedEmployees = $scope.employees;
+					
+					$scope.$watchCollection("employees", function(){
+						
+						$scope.employees.forEach(function(employee){
+							delete employee["$$hashKey"];
+						});
+						
+						localStorage.setItem("employees", JSON.stringify($scope.employees));
+					});
+					
+					$scope.selectEmployee = function(employee){
+						
+						$scope.employee = Object.assign(new Object, employee);
+					}
+					
+					$scope.toAddEmployee = function(){
+						
+						$scope.alert = {class:"alert-info", message:"Please enter Employee Details"};
+						
+						$scope.employee = new Object();
+					}
+					
+					$scope.addEmployee = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							$scope.employee.id = $scope.employees.length + 1;
+							$scope.employee.active = true;
+							
+							$scope.employees.push($scope.employee);
+							
+							$scope.searchEmployee();
+							
+							$scope.alert = {class:"alert-success", message:"Employee with ID#" + $scope.employee.id + " has been added successfully"};
+							
+							$("#employeeModal").modal("hide");
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.toUpdateEmployee = function(employee){
+						
+						$scope.alert = {class:"alert-info", message:"Please update Employee Details"};
+						
+						$scope.employee = Object.assign(new Object, employee);
+						
+						$timeout(function(){
+							
+							isValidForm();
+						});
+					}
+					
+					$scope.updateEmployee = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							var index = $scope.employees.findIndex(function(employee){
+								return employee.id == $scope.employee.id;
+							});
+							
+							$scope.employees[index] = $scope.employee;
+							
+							$scope.alert = {class:"alert-success", message:"Employee with ID#" + $scope.employee.id + " has been updated successfully"};
+							
+							$scope.searchEmployee();
+							
+							$("#employeeModal").modal("hide");
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.updateEmployeeActive = function(){
+						
+						$scope.employee.active = !$scope.employee.active;
+						
+						var index = $scope.employees.findIndex(function(employee){
+							return employee.id == $scope.employee.id;
+						});
+						
+						$scope.employees[index] = $scope.employee;
+						
+						if($scope.employee.active){
+							
+							$scope.alert = {class:"alert-success", message:"Employee with ID#" + $scope.employee.id + " has been activated successfully"};
+							
+						}else{
+							
+							$scope.alert = {class:"alert-success", message:"Employee with ID#" + $scope.employee.id + " has been deactivated successfully"};
+						}
+						
+						$scope.searchEmployee();
+					}
+					
+					$scope.updatePagination = function(){
+						
+						$scope.pageCount = Math.ceil($scope.searchedEmployees.length/$scope.rows);
+						$scope.from = ($scope.pageNo - 1) * $scope.rows;
+						$scope.to = $scope.pageNo * $scope.rows;
+					}
+					
+					$scope.$watch("pageNo", function(){
+						$scope.updatePagination();
+					});
+					
+					$scope.updateRows = function(){
+						
+						$scope.first();
+						
+						$scope.updatePagination();
+					}
+					
+					$scope.first = function(){
+						$scope.pageNo = 1;
+					}
+					
+					$scope.previous = function(){
+						$scope.pageNo--;
+					}
+					
+					$scope.next = function(){
+						$scope.pageNo++;
+					}
+					
+					$scope.last = function(){
+						$scope.pageNo = $scope.pageCount;
+					}
+					
+					$scope.searchEmployee = function(){
+						
+						$scope.searchedEmployees = new Array();
+						
+						$scope.employees.forEach(function(employee){
+							
+							var matched = true;
+							
+							for(let property in $scope.employeeSearch){
+								
+								if($scope.employeeSearch[property] != null
+									&& $scope.employeeSearch[property] != ""
+									&& $scope.employeeSearch[property] != employee[property]){
+									
+									matched = false;
+								}
+							}
+							
+							if(matched){
+								$scope.searchedEmployees.push(employee);
+							}
+						});
+						
+						$scope.updateRows();
+					}
+					
+					$scope.searchEmployee();
+				}
+			);
+			
+		</script>
+		<script src="common.js"></script>
+	</body>
+</html>

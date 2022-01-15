@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>Certificate Management</title>
+		
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no">
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		
+	    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-startup-image" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon-precomposed" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+	
+	</head>
+	<body>
+	
+		<div class="container-fluid" ng-app="application" ng-controller="controller">
+		
+			<h4 class="pb-2 mt-4 mb-3 border-bottom">
+				Certificate Management
+			</h4>
+			
+			<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+			</div>
+			
+			<div class="card">
+				<div class="card-header fw-bold">
+					Certificate Search
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">Id</label>
+								<input id="id" ng-model="certificateSearch.id" type="tel" class="form-control is-valid" placeholder="Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">Employee Id</label>
+								<input id="id" ng-model="certificateSearch.employee.id" type="tel" class="form-control is-valid" placeholder="Employee Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="name" class="form-label">Employee Name</label>
+								<input id="name" ng-model="certificateSearch.employee.name" type="text" class="form-control is-valid name" placeholder="Employee Name" maxlength="100" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="gender" class="form-label">Employee Gender</label>
+								<input id="gender" ng-model="certificateSearch.employee.gender" type="text" class="form-control is-valid" placeholder="Employee Gender" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="age" class="form-label">Employee Age</label>
+								<input id="age" ng-model="certificateSearch.employee.age" type="tel" class="form-control is-valid age" placeholder="Employee Age" maxlength="2" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="cpr" class="form-label">Employee Cpr</label>
+								<input id="cpr" ng-model="certificateSearch.employee.cpr" type="tel" class="form-control is-valid cpr" placeholder="Employee Cpr" maxlength="9" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="mobile" class="form-label">Employee Mobile</label>
+								<input id="mobile" ng-model="certificateSearch.employee.mobile" type="tel" class="form-control is-valid mobile" placeholder="Employee Mobile" maxlength="8" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">Address Id</label>
+								<input id="id" ng-model="certificateSearch.employee.address.id" type="tel" class="form-control is-valid" placeholder="Address Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="building" class="form-label">Address Building</label>
+								<input id="building" ng-model="certificateSearch.employee.address.building" type="tel" class="form-control is-valid" placeholder="Address Building" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="road" class="form-label">Address Road</label>
+								<input id="road" ng-model="certificateSearch.employee.address.road" type="tel" class="form-control is-valid" placeholder="Address Road" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="block" class="form-label">Address Block</label>
+								<input id="block" ng-model="certificateSearch.employee.address.block" type="tel" class="form-control is-valid" placeholder="Address Block" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">City Id</label>
+								<input id="id" ng-model="certificateSearch.employee.address.city.id" type="tel" class="form-control is-valid" placeholder="City Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="name" class="form-label">City Name</label>
+								<input id="name" ng-model="certificateSearch.employee.address.city.name" type="text" class="form-control is-valid name" placeholder="City Name" maxlength="100" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">City Active</label>
+								<input id="active" ng-model="certificateSearch.employee.address.city.active" type="text" class="form-control is-valid" placeholder="City Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">Address Active</label>
+								<input id="active" ng-model="certificateSearch.employee.address.city.active" type="text" class="form-control is-valid" placeholder="Address Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">Employee Active</label>
+								<input id="active" ng-model="certificateSearch.employee.address.active" type="text" class="form-control is-valid" placeholder="Employee Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="title" class="form-label">Title</label>
+								<input id="title" ng-model="certificateSearch.title" type="text" class="form-control is-valid" placeholder="Title" maxlength="200" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="year" class="form-label">Year</label>
+								<input id="year" ng-model="certificateSearch.year" type="tel" class="form-control is-valid" placeholder="Year" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">Active</label>
+								<input id="active" ng-model="certificateSearch.active" type="text" class="form-control is-valid" placeholder="Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-dark" ng-click="searchCertificate()">Search</button>
+				</div>
+			</div>
+			
+			<div class="card mt-4">
+				<div class="card-header fw-bold">
+					Certificate List
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Id
+								</th>
+								<th>
+									Employee Id
+								</th>
+								<th>
+									Employee Name
+								</th>
+								<th>
+									Employee Gender
+								</th>
+								<th>
+									Employee Age
+								</th>
+								<th>
+									Employee Cpr
+								</th>
+								<th>
+									Employee Mobile
+								</th>
+								<th>
+									Address Id
+								</th>
+								<th>
+									Address Building
+								</th>
+								<th>
+									Address Road
+								</th>
+								<th>
+									Address Block
+								</th>
+								<th>
+									City Id
+								</th>
+								<th>
+									City Name
+								</th>
+								<th>
+									City Active
+								</th>
+								<th>
+									Address Active
+								</th>
+								<th>
+									Employee Active
+								</th>
+								<th>
+									Title
+								</th>
+								<th>
+									Year
+								</th>
+								<th>
+									Active
+								</th>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#certificateModal" ng-click="toAddCertificate()">Add</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="certificate in searchedCertificates.slice(from, to)">
+								<td>
+									{{$index + 1}}
+								</td>
+								<td>
+									{{certificate.id}}
+								</td>
+								<td>
+									{{certificate.employee.id}}
+								</td>
+								<td>
+									{{certificate.employee.name}}
+								</td>
+								<td>
+									{{certificate.employee.gender}}
+								</td>
+								<td>
+									{{certificate.employee.age}}
+								</td>
+								<td>
+									{{certificate.employee.cpr}}
+								</td>
+								<td>
+									{{certificate.employee.mobile}}
+								</td>
+								<td>
+									{{certificate.employee.address.id}}
+								</td>
+								<td>
+									{{certificate.employee.address.building}}
+								</td>
+								<td>
+									{{certificate.employee.address.road}}
+								</td>
+								<td>
+									{{certificate.employee.address.block}}
+								</td>
+								<td>
+									{{certificate.employee.address.city.id}}
+								</td>
+								<td>
+									{{certificate.employee.address.city.name}}
+								</td>
+								<td>
+									{{certificate.employee.address.city.active ? 'Yes' : 'No'}}
+								</td>
+								<td>
+									{{certificate.employee.address.city.active ? 'Yes' : 'No'}}
+								</td>
+								<td>
+									{{certificate.employee.address.active ? 'Yes' : 'No'}}
+								</td>
+								<td>
+									{{certificate.title}}
+								</td>
+								<td>
+									{{certificate.year}}
+								</td>
+								<td>
+									{{certificate.active ? 'Yes' : 'No'}}
+								</td>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#viewModal" ng-click="selectCertificate(certificate)">View</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#certificateModal" ng-click="toUpdateCertificate(certificate)">Edit</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="!certificate.active" ng-click="selectCertificate(certificate)">Activate</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="certificate.active" ng-click="selectCertificate(certificate)">Deactivate</button>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-3 text-start">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="first()">First</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="previous()">Previous</button>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold">
+								Rows :
+								<select ng-model="rows" class="form-control d-inline w-auto" ng-change="updateRows()">
+									<option ng-value="5">5</option>
+									<option ng-value="10">10</option>
+									<option ng-value="15">15</option>
+									<option ng-value="20">20</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Total : {{searchedCertificates.length}}
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Page {{pageNo}} of {{pageCount}}
+							</label>
+						</div>
+						<div class="col-3 text-end">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="next()">Next</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="last()">Last</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="certificateModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{certificate.id == null ? 'Add' : 'Update'}} Certificate</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+							</div>
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Certificate Details
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="name" class="form-label">Employee Name</label>
+												<input id="name" ng-model="certificate.employee.name" type="text" class="form-control is-valid name required" placeholder="Employee Name" maxlength="100" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="gender" class="form-label">Employee Gender</label>
+												<input id="gender" ng-model="certificate.employee.gender" type="text" class="form-control is-valid required" placeholder="Employee Gender" maxlength="1" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="age" class="form-label">Employee Age</label>
+												<input id="age" ng-model="certificate.employee.age" type="tel" class="form-control is-valid age required" placeholder="Employee Age" maxlength="2" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="cpr" class="form-label">Employee Cpr</label>
+												<input id="cpr" ng-model="certificate.employee.cpr" type="tel" class="form-control is-valid cpr required" placeholder="Employee Cpr" maxlength="9" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="mobile" class="form-label">Employee Mobile</label>
+												<input id="mobile" ng-model="certificate.employee.mobile" type="tel" class="form-control is-valid mobile required" placeholder="Employee Mobile" maxlength="8" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="building" class="form-label">Address Building</label>
+												<input id="building" ng-model="certificate.employee.address.building" type="tel" class="form-control is-valid required" placeholder="Address Building" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="road" class="form-label">Address Road</label>
+												<input id="road" ng-model="certificate.employee.address.road" type="tel" class="form-control is-valid required" placeholder="Address Road" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="block" class="form-label">Address Block</label>
+												<input id="block" ng-model="certificate.employee.address.block" type="tel" class="form-control is-valid required" placeholder="Address Block" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="name" class="form-label">City Name</label>
+												<input id="name" ng-model="certificate.employee.address.city.name" type="text" class="form-control is-valid name" placeholder="City Name" maxlength="100" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="title" class="form-label">Title</label>
+												<input id="title" ng-model="certificate.title" type="text" class="form-control is-valid" placeholder="Title" maxlength="200" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="year" class="form-label">Year</label>
+												<input id="year" ng-model="certificate.year" type="tel" class="form-control is-valid" placeholder="Year" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" ng-if="certificate.id == null" ng-click="addCertificate()">Add</button>
+							<button type="button" class="btn btn-dark" ng-if="certificate.id != null" ng-click="updateCertificate()">Update</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="viewModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">View Certificate</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Certificate Details
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tbody>
+											<tr>
+												<th>
+													Id
+												</th>
+												<td>
+													{{certificate.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Id
+												</th>
+												<td>
+													{{certificate.employee.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Name
+												</th>
+												<td>
+													{{certificate.employee.name}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Gender
+												</th>
+												<td>
+													{{certificate.employee.gender}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Age
+												</th>
+												<td>
+													{{certificate.employee.age}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Cpr
+												</th>
+												<td>
+													{{certificate.employee.cpr}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Mobile
+												</th>
+												<td>
+													{{certificate.employee.mobile}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Address Id
+												</th>
+												<td>
+													{{certificate.employee.address.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Address Building
+												</th>
+												<td>
+													{{certificate.employee.address.building}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Address Road
+												</th>
+												<td>
+													{{certificate.employee.address.road}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Address Block
+												</th>
+												<td>
+													{{certificate.employee.address.block}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Id
+												</th>
+												<td>
+													{{certificate.employee.address.city.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Name
+												</th>
+												<td>
+													{{certificate.employee.address.city.name}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Active
+												</th>
+												<td>
+													{{certificate.employee.address.city.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Address Active
+												</th>
+												<td>
+													{{certificate.employee.address.city.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Employee Active
+												</th>
+												<td>
+													{{certificate.employee.address.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Title
+												</th>
+												<td>
+													{{certificate.title}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Year
+												</th>
+												<td>
+													{{certificate.year}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Active
+												</th>
+												<td>
+													{{certificate.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="activateModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{certificate.active ? 'Deactivate' : 'Activate'}} Certificate</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<h4>Are you sure to {{certificate.active ? 'deactivate' : 'activate'}} Certificate</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="!certificate.active" ng-click="updateCertificateActive()">Activate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="certificate.active" ng-click="updateCertificateActive()">Deactivate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			var application = angular.module("application", []);
+		
+			application.controller("controller", 
+
+				function($scope, $timeout){
+					
+					$scope.rows = 5;
+					$scope.from = 0;
+					$scope.to = $scope.rows;
+					$scope.pageNo = 1;
+					$scope.pageCount = 0;
+					$scope.alert = {class:"d-none", message:null};
+					$scope.certificateSearch = new Object();
+					$scope.certificate = new Object();
+					
+					
+					if(localStorage.getItem("certificates") != null){
+						$scope.certificates = JSON.parse(localStorage.getItem("certificates"));
+					}else{
+						$scope.certificates = new Array();
+						localStorage.setItem("certificates", JSON.stringify($scope.certificates));
+					}
+					
+					$scope.searchedCertificates = new Array();
+					
+					$scope.$watchCollection("certificates", function(){
+						
+						$scope.certificates.forEach(function(certificate){
+							delete certificate["$$hashKey"];
+						});
+						
+						localStorage.setItem("certificates", JSON.stringify($scope.certificates));
+					});
+					
+					$scope.selectCertificate = function(certificate){
+						
+						$scope.certificate = Object.assign(new Object, certificate);
+					}
+					
+					$scope.toAddCertificate = function(){
+						
+						$scope.alert = {class:"alert-info", message:"Please enter Certificate Details"};
+						
+						$scope.certificate = new Object();
+						
+					}
+					
+					$scope.addCertificate = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							$scope.certificate.id = $scope.certificates.length + 1;
+							$scope.certificate.active = true;
+							
+							$scope.certificates.push($scope.certificate);
+							
+							$scope.alert = {class:"alert-success", message:"Certificate with ID#" + $scope.certificate.id + " has been added successfully"};
+							
+							$("#certificateModal").modal("hide");
+							
+							$scope.searchCertificate();
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.toUpdateCertificate = function(certificate){
+						
+						$scope.alert = {class:"alert-info", message:"Please update Certificate Details"};
+						
+						$scope.certificate = Object.assign(new Object, certificate);
+						
+						
+						$timeout(function(){
+							
+							isValidForm();
+						})
+					}
+					
+					$scope.updateCertificate = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							var index = $scope.certificates.findIndex(function(certificate){
+								return certificate.id == $scope.certificate.id;
+							});
+							
+							$scope.certificates[index] = $scope.certificate;
+							
+							$scope.alert = {class:"alert-success", message:"Certificate with ID#" + $scope.certificate.id + " has been updated successfully"};
+							
+							$scope.searchCertificate();
+							
+							$("#certificateModal").modal("hide");
+							
+							$scope.searchCertificate();
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.updateCertificateActive = function(){
+						
+						$scope.certificate.active = !$scope.certificate.active;
+						
+						var index = $scope.certificates.findIndex(function(certificate){
+							return certificate.id == $scope.certificate.id;
+						});
+						
+						$scope.certificates[index] = $scope.certificate;
+						
+						if($scope.certificate.active){
+							
+							$scope.alert = {class:"alert-success", message:"Certificate with ID#" + $scope.certificate.id + " has been activated successfully"};
+							
+						}else{
+							
+							$scope.alert = {class:"alert-success", message:"Certificate with ID#" + $scope.certificate.id + " has been deactivated successfully"};
+						}
+						
+						$scope.searchCertificate();
+					}
+					
+					$scope.updatePagination = function(){
+						
+						$scope.pageCount = Math.ceil($scope.searchedCertificates.length/$scope.rows);
+						$scope.from = ($scope.pageNo - 1) * $scope.rows;
+						$scope.to = $scope.pageNo * $scope.rows;
+					}
+					
+					$scope.$watch("pageNo", function(){
+						$scope.updatePagination();
+					});
+					
+					$scope.updateRows = function(){
+						
+						$scope.first();
+						
+						$scope.updatePagination();
+					}
+					
+					$scope.first = function(){
+						$scope.pageNo = 1;
+					}
+					
+					$scope.previous = function(){
+						$scope.pageNo--;
+					}
+					
+					$scope.next = function(){
+						$scope.pageNo++;
+					}
+					
+					$scope.last = function(){
+						$scope.pageNo = $scope.pageCount;
+					}
+					
+					$scope.searchCertificate = function(){
+						
+						$scope.searchedCertificates = new Array();
+						
+						$scope.certificates.forEach(function(certificate){
+							
+							var matched = true;
+							
+							for(let property in $scope.certificateSearch){
+								
+								if($scope.certificateSearch[property] != null
+									&& $scope.certificateSearch[property] != ""
+									&& $scope.certificateSearch[property] != certificate[property]){
+									
+									matched = false;
+								}
+							}
+							
+							if(matched){
+								$scope.searchedCertificates.push(certificate);
+							}
+						});
+					}
+					
+					$scope.searchCertificate();
+					
+				}
+			);
+			
+		</script>
+		<script src="common.js"></script>
+	</body>
+</html>

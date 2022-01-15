@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>Address Management</title>
+		
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no">
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		
+	    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-startup-image" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+		<link rel="apple-touch-icon-precomposed" href="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png">
+	
+	</head>
+	<body>
+	
+		<div class="container-fluid" ng-app="application" ng-controller="controller">
+		
+			<h4 class="pb-2 mt-4 mb-3 border-bottom">
+				Address Management
+			</h4>
+			
+			<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+			</div>
+			
+			<div class="card">
+				<div class="card-header fw-bold">
+					Address Search
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">Id</label>
+								<input id="id" ng-model="addressSearch.id" type="tel" class="form-control is-valid" placeholder="Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="building" class="form-label">Building</label>
+								<input id="building" ng-model="addressSearch.building" type="tel" class="form-control is-valid" placeholder="Building" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="road" class="form-label">Road</label>
+								<input id="road" ng-model="addressSearch.road" type="tel" class="form-control is-valid" placeholder="Road" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="block" class="form-label">Block</label>
+								<input id="block" ng-model="addressSearch.block" type="tel" class="form-control is-valid" placeholder="Block" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="id" class="form-label">City Id</label>
+								<input id="id" ng-model="addressSearch.city.id" type="tel" class="form-control is-valid" placeholder="City Id" maxlength="10" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="name" class="form-label">City Name</label>
+								<input id="name" ng-model="addressSearch.city.name" type="text" class="form-control is-valid name" placeholder="City Name" maxlength="100" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">City Active</label>
+								<input id="active" ng-model="addressSearch.city.active" type="text" class="form-control is-valid" placeholder="City Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="mb-3">
+								<label for="active" class="form-label">Active</label>
+								<input id="active" ng-model="addressSearch.active" type="text" class="form-control is-valid" placeholder="Active" maxlength="1" autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-dark" ng-click="searchAddress()">Search</button>
+				</div>
+			</div>
+			
+			<div class="card mt-4">
+				<div class="card-header fw-bold">
+					Address List
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Id
+								</th>
+								<th>
+									Building
+								</th>
+								<th>
+									Road
+								</th>
+								<th>
+									Block
+								</th>
+								<th>
+									City Id
+								</th>
+								<th>
+									City Name
+								</th>
+								<th>
+									City Active
+								</th>
+								<th>
+									Active
+								</th>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addressModal" ng-click="toAddAddress()">Add</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="address in searchedAddresss.slice(from, to)">
+								<td>
+									{{$index + 1}}
+								</td>
+								<td>
+									{{address.id}}
+								</td>
+								<td>
+									{{address.building}}
+								</td>
+								<td>
+									{{address.road}}
+								</td>
+								<td>
+									{{address.block}}
+								</td>
+								<td>
+									{{address.city.id}}
+								</td>
+								<td>
+									{{address.city.name}}
+								</td>
+								<td>
+									{{address.city.active ? 'Yes' : 'No'}}
+								</td>
+								<td>
+									{{address.active ? 'Yes' : 'No'}}
+								</td>
+								<th>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#viewModal" ng-click="selectAddress(address)">View</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addressModal" ng-click="toUpdateAddress(address)">Edit</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="!address.active" ng-click="selectAddress(address)">Activate</button>
+									<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#activateModal" ng-if="address.active" ng-click="selectAddress(address)">Deactivate</button>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-3 text-start">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="first()">First</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != 1" ng-click="previous()">Previous</button>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold">
+								Rows :
+								<select ng-model="rows" class="form-control d-inline w-auto" ng-change="updateRows()">
+									<option ng-value="5">5</option>
+									<option ng-value="10">10</option>
+									<option ng-value="15">15</option>
+									<option ng-value="20">20</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Total : {{searchedAddresss.length}}
+							</label>
+						</div>
+						<div class="col-2 text-center">
+							<label class="fw-bold pt-1">
+								Page {{pageNo}} of {{pageCount}}
+							</label>
+						</div>
+						<div class="col-3 text-end">
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="next()">Next</button>
+							<button type="button" class="btn btn-dark" ng-if="pageNo != pageCount" ng-click="last()">Last</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="addressModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{address.id == null ? 'Add' : 'Update'}} Address</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div id="alert" ng-class="alert.class" ng-bind="alert.message" class="alert fw-bold text-center" role="alert">
+							</div>
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Address Details
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="building" class="form-label">Building</label>
+												<input id="building" ng-model="address.building" type="tel" class="form-control is-valid required" placeholder="Building" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="road" class="form-label">Road</label>
+												<input id="road" ng-model="address.road" type="tel" class="form-control is-valid required" placeholder="Road" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="block" class="form-label">Block</label>
+												<input id="block" ng-model="address.block" type="tel" class="form-control is-valid required" placeholder="Block" maxlength="10" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<div class="mb-3">
+												<label for="name" class="form-label">City Name</label>
+												<input id="name" ng-model="address.city.name" type="text" class="form-control is-valid name" placeholder="City Name" maxlength="100" autocomplete="off">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Employee List
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>
+													#
+												</th>
+												<th>
+													Name
+												</th>
+												<th>
+													Gender
+												</th>
+												<th>
+													Age
+												</th>
+												<th>
+													Cpr
+												</th>
+												<th>
+													Mobile
+												</th>
+												<th>
+													<button type="button" class="btn btn-dark" ng-click="addEmployee($index)">Add</button>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="employee in address.employees">
+												<td>
+													{{$index + 1}}
+												</td>
+												<td>
+													<div class="mb-3">
+														<input id="name" ng-model="employee.name" type="text" class="form-control is-valid name required" placeholder="Name" maxlength="100" autocomplete="off">
+													</div>
+												</td>
+												<td>
+													<div class="mb-3">
+														<input id="gender" ng-model="employee.gender" type="text" class="form-control is-valid required" placeholder="Gender" maxlength="1" autocomplete="off">
+													</div>
+												</td>
+												<td>
+													<div class="mb-3">
+														<input id="age" ng-model="employee.age" type="tel" class="form-control is-valid age required" placeholder="Age" maxlength="2" autocomplete="off">
+													</div>
+												</td>
+												<td>
+													<div class="mb-3">
+														<input id="cpr" ng-model="employee.cpr" type="tel" class="form-control is-valid cpr required" placeholder="Cpr" maxlength="9" autocomplete="off">
+													</div>
+												</td>
+												<td>
+													<div class="mb-3">
+														<input id="mobile" ng-model="employee.mobile" type="tel" class="form-control is-valid mobile required" placeholder="Mobile" maxlength="8" autocomplete="off">
+													</div>
+												</td>
+												<th>
+													<button type="button" class="btn btn-dark" ng-click="addEmployee($index)">+</button>
+													<button type="button" class="btn btn-dark" ng-click="deleteEmployee($index)">-</button>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" ng-if="address.id == null" ng-click="addAddress()">Add</button>
+							<button type="button" class="btn btn-dark" ng-if="address.id != null" ng-click="updateAddress()">Update</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="viewModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">View Address</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Address Details
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tbody>
+											<tr>
+												<th>
+													Id
+												</th>
+												<td>
+													{{address.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Building
+												</th>
+												<td>
+													{{address.building}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Road
+												</th>
+												<td>
+													{{address.road}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Block
+												</th>
+												<td>
+													{{address.block}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Id
+												</th>
+												<td>
+													{{address.city.id}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Name
+												</th>
+												<td>
+													{{address.city.name}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													City Active
+												</th>
+												<td>
+													{{address.city.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+											<tr>
+												<th>
+													Active
+												</th>
+												<td>
+													{{address.active ? 'Yes' : 'No'}}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="card mt-4">
+								<div class="card-header fw-bold">
+									Employee List
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>
+													#
+												</th>
+												<th>
+													Name
+												</th>
+												<th>
+													Gender
+												</th>
+												<th>
+													Age
+												</th>
+												<th>
+													Cpr
+												</th>
+												<th>
+													Mobile
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="employee in address.employees">
+												<td>
+													{{$index + 1}}
+												</td>
+												<td>
+													{{employee.name}}
+												</td>
+												<td>
+													{{employee.gender}}
+												</td>
+												<td>
+													{{employee.age}}
+												</td>
+												<td>
+													{{employee.cpr}}
+												</td>
+												<td>
+													{{employee.mobile}}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="activateModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{address.active ? 'Deactivate' : 'Activate'}} Address</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<h4>Are you sure to {{address.active ? 'deactivate' : 'activate'}} Address</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="!address.active" ng-click="updateAddressActive()">Activate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal" ng-if="address.active" ng-click="updateAddressActive()">Deactivate</button>
+							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			var application = angular.module("application", []);
+		
+			application.controller("controller", 
+
+				function($scope, $timeout){
+					
+					$scope.rows = 5;
+					$scope.from = 0;
+					$scope.to = $scope.rows;
+					$scope.pageNo = 1;
+					$scope.pageCount = 0;
+					$scope.alert = {class:"d-none", message:null};
+					$scope.addressSearch = new Object();
+					$scope.address = new Object();
+					
+					$scope.address.employees = new Array();
+					
+					if(localStorage.getItem("addresss") != null){
+						$scope.addresss = JSON.parse(localStorage.getItem("addresss"));
+					}else{
+						$scope.addresss = new Array();
+						localStorage.setItem("addresss", JSON.stringify($scope.addresss));
+					}
+					
+					$scope.searchedAddresss = new Array();
+					
+					$scope.$watchCollection("addresss", function(){
+						
+						$scope.addresss.forEach(function(address){
+							delete address["$$hashKey"];
+						});
+						
+						localStorage.setItem("addresss", JSON.stringify($scope.addresss));
+					});
+					
+					$scope.selectAddress = function(address){
+						
+						$scope.address = Object.assign(new Object, address);
+					}
+					
+					$scope.toAddAddress = function(){
+						
+						$scope.alert = {class:"alert-info", message:"Please enter Address Details"};
+						
+						$scope.address = new Object();
+						
+						$scope.address.employees = new Array();
+					}
+					
+					$scope.addAddress = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							$scope.address.id = $scope.addresss.length + 1;
+							$scope.address.active = true;
+							
+							$scope.addresss.push($scope.address);
+							
+							$scope.alert = {class:"alert-success", message:"Address with ID#" + $scope.address.id + " has been added successfully"};
+							
+							$("#addressModal").modal("hide");
+							
+							$scope.searchAddress();
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.toUpdateAddress = function(address){
+						
+						$scope.alert = {class:"alert-info", message:"Please update Address Details"};
+						
+						$scope.address = Object.assign(new Object, address);
+						
+						if($scope.address.employees == null){
+							$scope.address.employees = new Array();
+						}
+						
+						
+						$timeout(function(){
+							
+							isValidForm();
+						})
+					}
+					
+					$scope.updateAddress = function(){
+						
+						window.scrollTo(0, 0);
+						
+						var result = isValidForm();
+						
+						if(result == null){
+							
+							var index = $scope.addresss.findIndex(function(address){
+								return address.id == $scope.address.id;
+							});
+							
+							$scope.addresss[index] = $scope.address;
+							
+							$scope.alert = {class:"alert-success", message:"Address with ID#" + $scope.address.id + " has been updated successfully"};
+							
+							$scope.searchAddress();
+							
+							$("#addressModal").modal("hide");
+							
+							$scope.searchAddress();
+							
+						}else{
+							
+							$scope.alert = {class:"alert-danger", message:result};
+						}
+					}
+					
+					$scope.updateAddressActive = function(){
+						
+						$scope.address.active = !$scope.address.active;
+						
+						var index = $scope.addresss.findIndex(function(address){
+							return address.id == $scope.address.id;
+						});
+						
+						$scope.addresss[index] = $scope.address;
+						
+						if($scope.address.active){
+							
+							$scope.alert = {class:"alert-success", message:"Address with ID#" + $scope.address.id + " has been activated successfully"};
+							
+						}else{
+							
+							$scope.alert = {class:"alert-success", message:"Address with ID#" + $scope.address.id + " has been deactivated successfully"};
+						}
+						
+						$scope.searchAddress();
+					}
+					
+					$scope.updatePagination = function(){
+						
+						$scope.pageCount = Math.ceil($scope.searchedAddresss.length/$scope.rows);
+						$scope.from = ($scope.pageNo - 1) * $scope.rows;
+						$scope.to = $scope.pageNo * $scope.rows;
+					}
+					
+					$scope.$watch("pageNo", function(){
+						$scope.updatePagination();
+					});
+					
+					$scope.updateRows = function(){
+						
+						$scope.first();
+						
+						$scope.updatePagination();
+					}
+					
+					$scope.first = function(){
+						$scope.pageNo = 1;
+					}
+					
+					$scope.previous = function(){
+						$scope.pageNo--;
+					}
+					
+					$scope.next = function(){
+						$scope.pageNo++;
+					}
+					
+					$scope.last = function(){
+						$scope.pageNo = $scope.pageCount;
+					}
+					
+					$scope.searchAddress = function(){
+						
+						$scope.searchedAddresss = new Array();
+						
+						$scope.addresss.forEach(function(address){
+							
+							var matched = true;
+							
+							for(let property in $scope.addressSearch){
+								
+								if($scope.addressSearch[property] != null
+									&& $scope.addressSearch[property] != ""
+									&& $scope.addressSearch[property] != address[property]){
+									
+									matched = false;
+								}
+							}
+							
+							if(matched){
+								$scope.searchedAddresss.push(address);
+							}
+						});
+					}
+					
+					$scope.searchAddress();
+					
+					$scope.addEmployee = function(index){
+						$scope.address.employees.splice(index, 0, new Object());
+					}
+					
+					$scope.deleteEmployee = function(index){
+						$scope.address.employees.splice(index, 1);
+					}
+				}
+			);
+			
+		</script>
+		<script src="common.js"></script>
+	</body>
+</html>
