@@ -176,12 +176,12 @@ public class DatabaseReader {
 					table.exportedKeys.add(relationTable);
 				}
 			}
-			
-			table.columnList = getAllColumns(table, null, "");
 		}
 		
 		//Get Primary Key Column for each table
 		for(Table table : tableMap.values()) {
+			
+			table.columnList = getAllColumns(table, null, "");
 			
 			if(table.parentTable != null) {
 				
