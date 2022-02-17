@@ -201,7 +201,7 @@ public class DatabaseReader {
 			if(column.relationTable != null) {
 				
 				if(column.primaryKey) {
-					columns.addAll(getAllColumns(table.parentTable, null, ""));
+					columns.addAll(getAllColumns(table.parentTable, relationColumn, propertyName));
 				}else {
 					
 					propertyName += column.relationPropertyName + ".";
