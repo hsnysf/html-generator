@@ -204,9 +204,9 @@ public class DatabaseReader {
 					columns.addAll(getAllColumns(table.parentTable, relationColumn, propertyName));
 				}else {
 					
-					propertyName += column.relationPropertyName + ".";
+					String relationPropertyName = column.relationPropertyName + ".";
 					
-					columns.addAll(getAllColumns(column.relationTable, column, propertyName));
+					columns.addAll(getAllColumns(column.relationTable, column, relationPropertyName));
 				}
 				
 			}else {
